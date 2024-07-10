@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
 
-def create_app():
+def make_app():
     app = Flask(__name__)
 
     @app.route('/')
     def hello_world():
-        return 'Hello, World!'
+        return jsonify({'message': 'Hello, World!'})
 
     return app
