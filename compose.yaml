@@ -1,9 +1,11 @@
 services:
   api:
-    build: ./docker/app
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
     volumes:
       - type: bind
-        source: ./
+        source: .
         target: /app
     ports:
       - "5000:5000"
