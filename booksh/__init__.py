@@ -4,8 +4,8 @@ import requests
 import xml.etree.ElementTree as ET
 
 
-# TODO write test (pytest)
-# TODO write type annotation (mypy)
+# Response Data's parameter is not enough
+# I suppose building service is difficult using ndl api
 
 def create_app():
     app = Flask(__name__)
@@ -43,6 +43,7 @@ def create_app():
         if items is None:
             return []
         filtered_items = list(filter(lambda item: (
+            # TODO 図書のみだと結構色々省かれてそうだから、!= の形にした方が良いかも
             item.find('.//category') is not None
             and item.find('.//category').text == '図書'), items))
         return filtered_items
@@ -59,6 +60,8 @@ def create_app():
                 if creator is not None else [])
             issued = find_with_namespace(item, './/dcterms:issued')
             book['issued'] = issued.text if issued is not None else ''
+            volume = find_with_namespace(item, './/dcndl:volume')
+            book['volume'] = volume.text if volume is not None else ''
             price = find_with_namespace(item, './/dcndl:price')
             book['price'] = price.text if price is not None else ''
             edition = find_with_namespace(item, './/dcndl:edition')
@@ -68,7 +71,7 @@ def create_app():
                 identifier = identifier.text
                 book['thumbnail'] = (
                     'https://ndlsearch.ndl.go.jp/thumbnail/'
-                    '{"".join(identifier.split("-"))}.jpg')
+                    f'{"".join(identifier.split("-"))}.jpg')
             books.append(book)
         return books
 
