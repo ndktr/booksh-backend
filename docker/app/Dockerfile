@@ -8,4 +8,4 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY booksh /app/booksh
 
-CMD ["flask", "--app", "booksh", "run", "--host=0.0.0.0"]
+CMD ["flask", "--app", "booksh", "run", "--host=0.0.0.0", "--debugger", "--reload"]
