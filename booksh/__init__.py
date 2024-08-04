@@ -18,7 +18,6 @@ def create_app():
 
     @app.route('/', methods=['POST'])
     def search_book():
-        # JSONでPOSTを受け取ってtitleを取得、それを使用してNDLにAPI通信をする
         request_json = request.get_json()
         title = request_json['title']
 
